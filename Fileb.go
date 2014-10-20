@@ -31,6 +31,16 @@ func (filebSelf *Fileb) Path() string {
 	return filebSelf.innerPath
 }
 
+func (filebSelf *Fileb) CreateFile() (*os.File, error) {
+	return os.Create(filebSelf.innerPath)
+}
+
+// TODO Make this better for creating with permissions.  A nice enum type
+// or something.
+func (filebSelf *Fileb) CreateDir() error {
+	return os.MkdirAll(filebSelf.innerPath, 0777)
+}
+
 // GetFileInfo returns the file info struct related to this file
 func (filebSelf *Fileb) GetFileInfo() (os.FileInfo, error) {
 	fileInfo, err := os.Stat(filebSelf.innerPath)
